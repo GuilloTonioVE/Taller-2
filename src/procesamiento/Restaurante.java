@@ -61,66 +61,22 @@ public class Restaurante {
 		
 		String linea = br.readLine();
 		
-		while (linea != null) // Cuando se llegue al final del archivo, linea tendrá el valor null
+		while (linea != null) // Cuando se llegue al final del archivo, linea tendrÃ¡ el valor null
 		{
-			// Separar los valores que estaban en una línea
+			// Separar los valores que estaban en una lÃ­nea
 			String[] partes = linea.split(",");
-			Ingrediente nombreProducto = partes[0];
-			Ingrediente precio = partes[1];
+			String nombreProducto = partes[0];
+			double precio = Double.parseDouble(partes[1]);
 			
-			ingredientes.put(nombreProducto, precio);
-
-			// Si el país no existe, lo agrega a la lista de paises
-			Pais elPais = paises.get(nombrePais);
-			if (elPais == null)
+			Ingrediente elIngrediente = ingredientes.get(nombreProducto);
+			if (elIngrediente == null)
 			{
-				elPais = new Pais(nombrePais);
-				paises.put(nombrePais, elPais);
+				elIngrediente = new Ingrediente(nombreProducto, precio);
+				ingredientes.put(nombreProducto,elIngrediente);
 			}
 
-			// Si no se había encontrado antes a ese atleta, se agrega como un nuevo atleta.
-			// Acá suponemos que no hay atletas con el mismo nombre
-			Atleta elAtleta = atletas.get(nombreAtleta);
-			if (elAtleta == null)
-			{
-				elAtleta = new Atleta(nombreAtleta, genero, elPais);
-				elPais.agregarAtleta(elAtleta);
-				atletas.put(nombreAtleta, elAtleta);
-			}
-
-			// Si no se había encontrado antes este evento, se agrega como uno nuevo.
-			// Los eventos se identifican por su nombre y el año.
-			Evento elEvento = buscarEvento(eventos, nombreEvento, anio);
-			if (elEvento == null)
-			{
-				elEvento = new Evento(nombreEvento, anio);
-				eventos.add(elEvento);
-			}
-
-			// Registra la participación del atleta en el evento, incluyendo el resultado
-			// alcanzado (medalla de oro, plata, bronce o ninguna - na).
-			Participacion laParticipacion = new Participacion(elAtleta, edad, elEvento, laMedalla);
-			elAtleta.agregarParticipacion(laParticipacion);
-			elEvento.agregarParticipacion(laParticipacion);
-
-			linea = br.readLine(); // Leer la siguiente línea
+			linea = br.readLine(); // Leer la siguiente lÃ­nea
 		}
-	}
-	
-	public static cargarMenu cargarArchivo(String archivoMenu, String archivoIngredientes, String archivoCombo) throws FileNotFoundException, IOException
-	{
-		List<ProductoMenu> menuBase = new ArrayList<>();
-		Map<String, Ingrediente> ingredientes = new HashMap<>();
-		Map<String, Combo> combos = new HashMap<>();
-		
-
-		// Abrir el archivo y leerlo línea por línea usando un BufferedReader
-		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
-		String linea = br.readLine(); // La primera línea del archivo se ignora porque únicamente tiene los títulos de
-										// las columnas
-		
-		
-
 		br.close();
-}
+	}		
 }
